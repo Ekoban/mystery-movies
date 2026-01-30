@@ -321,7 +321,24 @@
 </head>
 <body data-page="destination">
   <div class="fade-overlay active"></div>
-  <audio autoplay loop src="img/gustave.mp3"></audio>
+  <audio id="bg-music" loop src="img/gustave.mp3"></audio>
+  <script>
+    (function() {
+      var audio = document.getElementById('bg-music');
+      var p = audio.play();
+      if (p !== undefined) {
+        p.catch(function() {
+          // Autoplay blocked (mobile) — play on first interaction
+          var events = ['touchstart', 'click', 'scroll'];
+          function resume() {
+            audio.play();
+            events.forEach(function(e) { document.removeEventListener(e, resume); });
+          }
+          events.forEach(function(e) { document.addEventListener(e, resume, { once: true }); });
+        });
+      }
+    })();
+  </script>
   <div class="hero"></div>
   <div class="container">
 
