@@ -133,7 +133,7 @@ body {
 }
 
 .word-spacer {
-  width: 20px;
+  width: 6px;
 }
 
 /* --- Input Boxes --- */
@@ -331,7 +331,7 @@ body[data-page="destination"]::before {
   }
 
   .word-spacer {
-    width: 12px;
+    width: 4px;
   }
 
   .page-wrapper {
