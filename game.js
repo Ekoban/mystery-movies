@@ -59,6 +59,24 @@
   var ENTRY_ANSWER = 'DIANEPYBARA';
   var FINAL_ANSWER = 'TALLINN';
 
+  // ===== Typewriter Click Sound =====
+
+  var clickPool = [];
+  var clickIndex = 0;
+  var POOL_SIZE = 5;
+  for (var i = 0; i < POOL_SIZE; i++) {
+    var a = new Audio('img/typewriterclick.wav');
+    a.preload = 'auto';
+    clickPool.push(a);
+  }
+
+  function playClick() {
+    var snd = clickPool[clickIndex];
+    snd.currentTime = 0;
+    snd.play().catch(function () {});
+    clickIndex = (clickIndex + 1) % POOL_SIZE;
+  }
+
   // ===== State Management =====
 
   function getState() {
@@ -188,6 +206,7 @@
         var v = box.value.replace(/[^a-zA-Z0-9]/g, '');
         if (v.length > 1) v = v.charAt(v.length - 1);
         box.value = v.toUpperCase();
+        if (v) playClick();
 
         if (v && i < boxes.length - 1) boxes[i + 1].focus();
         if (options.onInput) options.onInput(boxes);
@@ -198,6 +217,7 @@
 
       box.addEventListener('keydown', function (e) {
         if (e.key === 'Backspace') {
+          playClick();
           if (box.value === '' && i > 0) {
             boxes[i - 1].value = '';
             boxes[i - 1].focus();
