@@ -441,7 +441,30 @@
     });
   }
 
+  function preloadRevealAssets() {
+    var images = [
+      'img/tallinnherooldtown.jpg',
+      'img/rataskaevu_6.webp',
+      'img/sigmundfreud.webp',
+      'img/tallinn-susnet.jpg',
+      'img/kumuartmuseum.jpg',
+      'img/telliskivi.jpg',
+      'img/kalma-saun-rasmus-jurkatam-2020.webp',
+      'img/iglupark-tallinn-estonie-coucher-soleil.jpg',
+      'img/lennusadam.jpg'
+    ];
+    images.forEach(function (src) {
+      var img = new Image();
+      img.src = src;
+    });
+    var audio = new Audio();
+    audio.preload = 'auto';
+    audio.src = 'img/gustave.mp3';
+  }
+
   function initConvergence() {
+    preloadRevealAssets();
+
     var state = getState();
     var riddle = document.querySelector('.riddle');
     var area = document.querySelector('.input-area');
