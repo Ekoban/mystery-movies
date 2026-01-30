@@ -59,22 +59,34 @@
   var ENTRY_ANSWER = 'DIANEPYBARA';
   var FINAL_ANSWER = 'TALLINN';
 
-  // ===== Typewriter Click Sound =====
+  // ===== Typewriter Click Sound (Web Audio API) =====
 
-  var clickPool = [];
-  var clickIndex = 0;
-  var POOL_SIZE = 5;
-  for (var i = 0; i < POOL_SIZE; i++) {
-    var a = new Audio('img/typewriterclick.wav');
-    a.preload = 'auto';
-    clickPool.push(a);
+  var clickCtx = null;
+  var clickBuffer = null;
+
+  try {
+    clickCtx = new (window.AudioContext || window.webkitAudioContext)();
+    fetch('img/typewriterclick.wav')
+      .then(function (r) { return r.arrayBuffer(); })
+      .then(function (buf) { return clickCtx.decodeAudioData(buf); })
+      .then(function (decoded) { clickBuffer = decoded; });
+  } catch (e) { /* Web Audio not supported */ }
+
+  // Unlock AudioContext on first user gesture (required on mobile)
+  function unlockAudio() {
+    if (clickCtx && clickCtx.state === 'suspended') clickCtx.resume();
+    document.removeEventListener('touchstart', unlockAudio);
+    document.removeEventListener('click', unlockAudio);
   }
+  document.addEventListener('touchstart', unlockAudio);
+  document.addEventListener('click', unlockAudio);
 
   function playClick() {
-    var snd = clickPool[clickIndex];
-    snd.currentTime = 0;
-    snd.play().catch(function () {});
-    clickIndex = (clickIndex + 1) % POOL_SIZE;
+    if (!clickCtx || !clickBuffer) return;
+    var source = clickCtx.createBufferSource();
+    source.buffer = clickBuffer;
+    source.connect(clickCtx.destination);
+    source.start(0);
   }
 
   // ===== State Management =====
