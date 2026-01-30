@@ -291,191 +291,14 @@ body {
   border-radius: 50%;
 }
 
-/* --- Destination Page (Letter / Typewriter) --- */
+/* --- Destination Page (override base dark theme) --- */
 body[data-page="destination"] {
-  background: #f0ece3;
-  color: #2a2a2a;
-  font-family: 'Courier Prime', 'Courier New', monospace;
+  background: #fafafa;
   animation: none;
-  line-height: 1.7;
 }
 
-body[data-page="destination"] .fade-overlay {
-  background: #000;
-}
-
-.dest {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 4rem 2.5rem 5rem;
-}
-
-/* Header */
-.dest-header {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-body[data-page="destination"] h1 {
-  font-family: 'Special Elite', monospace;
-  font-size: 3.2rem;
-  font-weight: normal;
-  letter-spacing: 10px;
-  margin-bottom: 0.4rem;
-  color: #1a1a1a;
-}
-
-body[data-page="destination"] .subtitle {
-  font-size: 0.95rem;
-  color: #777;
-  letter-spacing: 1px;
-}
-
-/* Horizontal rules */
-body[data-page="destination"] hr {
-  border: none;
-  border-top: 1px solid #ccc5b8;
-  margin: 2.5rem 0;
-}
-
-body[data-page="destination"] hr.thin {
-  border-top: 1px dashed #d5cfc4;
-  margin: 2rem 0;
-}
-
-/* Headings */
-body[data-page="destination"] h2 {
-  font-family: 'Special Elite', monospace;
-  font-size: 1.3rem;
-  font-weight: normal;
-  color: #1a1a1a;
-  margin-bottom: 1rem;
-  letter-spacing: 1px;
-}
-
-body[data-page="destination"] h3 {
-  font-family: 'Special Elite', monospace;
-  font-size: 1.1rem;
-  font-weight: normal;
-  color: #3a3a3a;
-  margin-bottom: 0.8rem;
-  margin-top: 1.5rem;
-  padding-bottom: 0.3rem;
-  border-bottom: 1px dotted #d5cfc4;
-}
-
-body[data-page="destination"] h4 {
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #888;
-  margin-top: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Body text */
-body[data-page="destination"] p {
-  font-size: 0.95rem;
-  margin: 0.4rem 0;
-  color: #3a3a3a;
-}
-
-body[data-page="destination"] em {
-  color: #6a6a6a;
-  font-size: 0.88rem;
-}
-
-body[data-page="destination"] strong {
-  color: #1a1a1a;
-  font-weight: 700;
-}
-
-/* Lists */
-body[data-page="destination"] ul {
-  list-style: none;
-  padding: 0;
-  margin: 0.3rem 0;
-}
-
-body[data-page="destination"] li {
-  font-size: 0.95rem;
-  padding: 0.45rem 0 0.45rem 1.4rem;
-  position: relative;
-  color: #3a3a3a;
-}
-
-body[data-page="destination"] li::before {
-  content: '\2014';
-  position: absolute;
-  left: 0;
-  color: #b0a898;
-}
-
-body[data-page="destination"] li em {
-  display: block;
-  margin-top: 0.15rem;
-}
-
-/* Table */
-body[data-page="destination"] table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-
-body[data-page="destination"] td {
-  padding: 0.55rem 0.8rem;
-  border-bottom: 1px solid #ddd7cc;
-  vertical-align: top;
-}
-
-body[data-page="destination"] td:first-child {
-  white-space: nowrap;
-  width: 1%;
-  padding-left: 0;
-  color: #1a1a1a;
-}
-
-body[data-page="destination"] td:last-child {
-  color: #5a5a5a;
-}
-
-body[data-page="destination"] tr:last-child td {
-  border-bottom: none;
-}
-
-/* Links */
-body[data-page="destination"] a {
-  color: #5a7a6a;
-  text-decoration: none;
-  border-bottom: 1px solid #b8ccc0;
-  transition: border-color 0.2s, color 0.2s;
-}
-
-body[data-page="destination"] a:hover {
-  color: #3a5a4a;
-  border-bottom-color: #3a5a4a;
-}
-
-.links-section h4 {
-  margin-top: 1rem;
-}
-
-.links-section p {
-  margin-bottom: 0.6rem;
-}
-
-/* Footer */
-.dest-footer {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.dest-footer em {
-  font-size: 1rem;
-  color: #555;
+body[data-page="destination"]::before {
+  display: none;
 }
 
 /* --- Responsive --- */
@@ -509,20 +332,6 @@ body[data-page="destination"] a:hover {
 
   .word-spacer {
     width: 12px;
-  }
-
-  body[data-page="destination"] h1 {
-    font-size: 2.2rem;
-    letter-spacing: 6px;
-  }
-
-  .dest {
-    padding: 3rem 1.5rem 4rem;
-  }
-
-  body[data-page="destination"] td {
-    padding: 0.45rem 0.5rem;
-    font-size: 0.85rem;
   }
 
   .page-wrapper {

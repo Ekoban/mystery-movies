@@ -3,144 +3,541 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TALLINN</title>
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <title>Tallinn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
+      line-height: 1.7;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    /* Fade overlay for game transition */
+    .fade-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #000;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .fade-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Hero image */
+    .hero {
+      width: 100%;
+      height: 70vh;
+      min-height: 400px;
+      background: url('img/tallinnherooldtown.jpg') center center / cover no-repeat;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to top, #fafafa 0%, transparent 100%);
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-top: -4rem;
+      margin-bottom: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 3.5rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+      color: #0a0a0a;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #666;
+      font-weight: 400;
+    }
+
+    /* Photo grid */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 2rem 0;
+    }
+
+    .photo-grid.single {
+      grid-template-columns: 1fr;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .photo-grid.single img {
+      height: 240px;
+    }
+
+    .photo-caption {
+      font-size: 0.75rem;
+      color: #999;
+      text-align: center;
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #999;
+      margin-bottom: 1.25rem;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #1a1a1a;
+    }
+
+    p {
+      color: #444;
+      margin-bottom: 1rem;
+    }
+
+    /* Dividers */
+    hr {
+      border: none;
+      border-top: 1px solid #e5e5e5;
+      margin: 3rem 0;
+    }
+
+    /* Hotel card */
+    .hotel {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hotel h3 {
+      margin-bottom: 0.75rem;
+    }
+
+    .hotel p {
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+
+    /* Day blocks */
+    .day {
+      margin-bottom: 2.5rem;
+    }
+
+    .day-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #1a1a1a;
+      display: inline-block;
+    }
+
+    .moment {
+      margin-bottom: 1.5rem;
+    }
+
+    .moment-time {
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #999;
+      margin-bottom: 0.5rem;
+    }
+
+    .spot {
+      margin-bottom: 0.75rem;
+    }
+
+    .spot-name {
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .spot-desc {
+      font-size: 0.9rem;
+      color: #666;
+      font-style: italic;
+    }
+
+    /* Quartiers */
+    .quartiers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .quartier {
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+    }
+
+    .quartier-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .quartier-vibe {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    /* Links */
+    .links {
+      columns: 2;
+      column-gap: 2rem;
+    }
+
+    .link-group {
+      break-inside: avoid;
+      margin-bottom: 1.5rem;
+    }
+
+    .link-group h4 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #999;
+      margin-bottom: 0.5rem;
+    }
+
+    a {
+      color: #1a1a1a;
+      text-decoration: none;
+      border-bottom: 1px solid #ccc;
+      transition: border-color 0.2s;
+    }
+
+    a:hover {
+      border-color: #1a1a1a;
+    }
+
+    .link-group a {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Footer message */
+    .message {
+      text-align: center;
+      padding: 2rem 0;
+      font-size: 1.1rem;
+      color: #1a1a1a;
+    }
+
+    .heart {
+      display: inline-block;
+      color: #3b82f6;
+      margin-left: 0.25rem;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 480px) {
+      .hero {
+        height: 50vh;
+        min-height: 300px;
+      }
+
+      header {
+        margin-top: -3rem;
+      }
+
+      h1 {
+        font-size: 2.75rem;
+      }
+
+      .photo-grid img {
+        height: 140px;
+      }
+
+      .quartiers {
+        grid-template-columns: 1fr;
+      }
+
+      .links {
+        columns: 1;
+      }
+    }
+  </style>
 </head>
 <body data-page="destination">
   <div class="fade-overlay active"></div>
-  <div class="dest">
-    <header class="dest-header">
+  <div class="hero"></div>
+  <div class="container">
+
+    <header>
       <h1>TALLINN</h1>
-      <p class="subtitle">Un weekend pour deux &mdash; Mars 2025</p>
+      <p class="subtitle">Un weekend pour deux, mars 2025</p>
     </header>
 
-    <hr>
-
+    <!-- Hôtel -->
     <section>
-      <h2>&#x1F3E8; Notre nid</h2>
-      <p><strong>Hotel Telegraaf</strong> &mdash; Old Town</p>
-      <p>B&acirc;timent historique de 1878, spa priv&eacute; avec piscine, jacuzzi et sauna.<br>Au c&oelig;ur de la vieille ville m&eacute;di&eacute;vale.</p>
+      <h2>Notre nid</h2>
+      <div class="hotel">
+        <h3>Hotel Telegraaf</h3>
+        <p>Dans la vieille ville, un bâtiment de 1878 avec spa privé : piscine, jacuzzi, sauna.</p>
+      </div>
+      <div class="photo-grid single">
+        <img src="img/rataskaevu_6.webp" alt="Rataskaevu 16 restaurant">
+      </div>
+      <p class="photo-caption">Ambiance chaleureuse du Rataskaevu 16</p>
     </section>
 
     <hr>
 
+    <!-- Itinéraire -->
     <section>
-      <h2>&#x1F4C5; Le programme</h2>
+      <h2>Le programme</h2>
 
-      <h3>Vendredi soir &mdash; Arriv&eacute;e</h3>
-      <ul>
-        <li>Check-in &amp; installation</li>
-        <li><strong>D&icirc;ner romantique</strong> &mdash; Rataskaevu 16<br><em>Cave m&eacute;di&eacute;vale, cuisine estonienne moderne, &eacute;lan r&ocirc;ti et pain de seigle</em></li>
-        <li><strong>Digestif</strong> &mdash; Sigmund Freud Bar<br><em>Speakeasy dans les caves vo&ucirc;t&eacute;es</em></li>
-        <li>Balade nocturne dans la vieille ville d&eacute;serte</li>
-      </ul>
+      <!-- Vendredi -->
+      <div class="day">
+        <div class="day-title">Vendredi soir</div>
 
-      <hr class="thin">
+        <div class="moment">
+          <div class="spot">
+            <span class="spot-name">Rataskaevu 16</span><br>
+            <span class="spot-desc">Notre premier dîner. Cave médiévale, cuisine estonienne, élan rôti.</span>
+          </div>
+          <div class="spot">
+            <span class="spot-name">Sigmund Freud Bar</span><br>
+            <span class="spot-desc">Speakeasy dans les caves voûtées, pour un digestif.</span>
+          </div>
+          <div class="spot">
+            <span class="spot-name">Balade nocturne</span><br>
+            <span class="spot-desc">La vieille ville déserte sous les lumières</span>
+          </div>
+        </div>
 
-      <h3>Samedi &mdash; Culture &amp; Bien-&Ecirc;tre</h3>
+        <div class="photo-grid">
+          <img src="img/sigmundfreud.webp" alt="Sigmund Freud Bar">
+          <img src="img/tallinn-susnet.jpg" alt="Tallinn sunset">
+        </div>
+        <p class="photo-caption">Sigmund Freud Bar, coucher de soleil sur Tallinn</p>
+      </div>
 
-      <h4>Matin</h4>
-      <ul>
-        <li>Petit-d&eacute;jeuner &agrave; l&rsquo;h&ocirc;tel</li>
-        <li><strong>Kumu Art Museum</strong><br><em>Le plus grand mus&eacute;e d&rsquo;art des Baltes &mdash; architecture brutaliste + art estonien sous occupation sovi&eacute;tique</em></li>
-      </ul>
+      <!-- Samedi -->
+      <div class="day">
+        <div class="day-title">Samedi</div>
 
-      <h4>Midi</h4>
-      <ul>
-        <li><strong>D&eacute;jeuner</strong> &mdash; Moon (Telliskivi)<br><em>Cuisine slave moderne, pelmeni sib&eacute;riens, blinis au caviar</em></li>
-        <li><strong>Telliskivi Creative City</strong><br><em>Ancienne usine sovi&eacute;tique &rarr; galeries, designers estoniens, street art</em></li>
-      </ul>
+        <div class="moment">
+          <div class="moment-time">Matin</div>
+          <div class="spot">
+            <span class="spot-name">Kumu Art Museum</span><br>
+            <span class="spot-desc">Le plus grand musée d'art des pays baltes. Architecture brutaliste, art estonien sous l'ère soviétique.</span>
+          </div>
+        </div>
 
-      <h4>Apr&egrave;s-midi</h4>
-      <ul>
-        <li><strong>Kalma Saun</strong><br><em>Sauna public authentique depuis 1928 &mdash; architecture Art D&eacute;co, viht en bouleau</em></li>
-      </ul>
+        <div class="photo-grid single">
+          <img src="img/kumuartmuseum.jpg" alt="Kumu Art Museum">
+        </div>
+        <p class="photo-caption">Architecture spectaculaire du Kumu</p>
 
-      <h4>Soir</h4>
-      <ul>
-        <li><strong>Ap&eacute;ro</strong> &mdash; Puri Wine<br><em>Bar &agrave; vins naturels, planches</em></li>
-        <li><strong>D&icirc;ner</strong> &mdash; Vesta<br><em>Nouveau spot 2025, tapas estoniens cr&eacute;atifs</em></li>
-        <li><strong>Dernier verre</strong> &mdash; F-Hoone<br><em>Institution de Telliskivi</em></li>
-      </ul>
+        <div class="moment">
+          <div class="moment-time">Midi</div>
+          <div class="spot">
+            <span class="spot-name">Déjeuner — Moon</span><br>
+            <span class="spot-desc">Cuisine slave moderne, pelmeni sibériens, blinis au caviar</span>
+          </div>
+          <div class="spot">
+            <span class="spot-name">Telliskivi Creative City</span><br>
+            <span class="spot-desc">Ancienne usine soviétique reconvertie en galeries, boutiques de designers, street art.</span>
+          </div>
+        </div>
 
-      <hr class="thin">
+        <div class="moment">
+          <div class="moment-time">Après-midi</div>
+          <div class="spot">
+            <span class="spot-name">Kalma Saun</span><br>
+            <span class="spot-desc">Sauna public depuis 1928. Bâtiment Art Déco, ambiance locale, fouets en bouleau.</span>
+          </div>
+        </div>
 
-      <h3>Dimanche &mdash; Mer &amp; D&eacute;tente</h3>
+        <div class="moment">
+          <div class="moment-time">Soir</div>
+          <div class="spot">
+            <span class="spot-name">Puri Wine</span><br>
+            <span class="spot-desc">Vins naturels et planches pour l'apéro.</span>
+          </div>
+          <div class="spot">
+            <span class="spot-name">Vesta</span><br>
+            <span class="spot-desc">Ouvert en 2025, tapas estoniens créatifs.</span>
+          </div>
+          <div class="spot">
+            <span class="spot-name">F-Hoone</span><br>
+            <span class="spot-desc">L'institution de Telliskivi, pour un dernier verre.</span>
+          </div>
+        </div>
 
-      <h4>Matin</h4>
-      <ul>
-        <li>Brunch tranquille</li>
-        <li><strong>Lennusadam</strong> &mdash; Seaplane Harbour<br><em>Mus&eacute;e maritime dans un hangar &agrave; hydravions + sous-marin Lembit</em></li>
-      </ul>
+        <div class="photo-grid">
+          <img src="img/telliskivi.jpg" alt="Telliskivi street art">
+          <img src="img/kalma-saun-rasmus-jurkatam-2020.webp" alt="Kalma Saun">
+        </div>
+        <p class="photo-caption">Telliskivi, Kalma Saun</p>
+      </div>
 
-      <h4>Midi</h4>
-      <ul>
-        <li><strong>D&eacute;jeuner</strong> &mdash; P&otilde;hjala Tap Room<br><em>Brasserie craft, burgers, bi&egrave;res maison</em></li>
-      </ul>
+      <!-- Dimanche -->
+      <div class="day">
+        <div class="day-title">Dimanche</div>
 
-      <h4>Apr&egrave;s-midi</h4>
-      <ul>
-        <li><strong>Iglupark</strong><br><em>Sauna priv&eacute; face &agrave; la Baltique &mdash; coucher de soleil sur la baie</em></li>
-      </ul>
+        <div class="moment">
+          <div class="moment-time">Matin</div>
+          <div class="spot">
+            <span class="spot-name">Lennusadam (Seaplane Harbour)</span><br>
+            <span class="spot-desc">Musée maritime dans un hangar à hydravions. On peut visiter un sous-marin.</span>
+          </div>
+        </div>
 
-      <h4>Soir</h4>
-      <ul>
-        <li>Derni&egrave;re balade Old Town</li>
-        <li>&#x2708;&#xFE0F; Retour</li>
-      </ul>
+        <div class="moment">
+          <div class="moment-time">Midi</div>
+          <div class="spot">
+            <span class="spot-name">Põhjala Tap Room</span><br>
+            <span class="spot-desc">Brasserie locale, burgers et bières maison.</span>
+          </div>
+        </div>
+
+        <div class="moment">
+          <div class="moment-time">Après-midi</div>
+          <div class="spot">
+            <span class="spot-name">Iglupark</span><br>
+            <span class="spot-desc">Sauna privé face à la mer. On regarde le soleil se coucher sur la baie.</span>
+          </div>
+        </div>
+
+        <div class="moment">
+          <div class="moment-time">Soir</div>
+          <div class="spot">
+            <span class="spot-name">Dernière balade dans la vieille ville, puis retour</span>
+          </div>
+        </div>
+
+        <div class="photo-grid">
+          <img src="img/iglupark-tallinn-estonie-coucher-soleil.jpg" alt="Iglupark sauna sunset">
+          <img src="img/lennusadam.jpg" alt="Lennusadam harbour">
+        </div>
+        <p class="photo-caption">Iglupark au coucher du soleil, port de Noblessner</p>
+      </div>
     </section>
 
     <hr>
 
+    <!-- Quartiers -->
     <section>
-      <h2>&#x1F5FA;&#xFE0F; Les quartiers</h2>
-      <table>
-        <tbody>
-          <tr><td><strong>Old Town</strong></td><td>M&eacute;di&eacute;val UNESCO, ruelles pav&eacute;es, remparts</td></tr>
-          <tr><td><strong>Telliskivi</strong></td><td>Cr&eacute;atif, hipster, street art, restos</td></tr>
-          <tr><td><strong>Kalamaja</strong></td><td>Maisons en bois color&eacute;es, boh&egrave;me</td></tr>
-          <tr><td><strong>Noblessner</strong></td><td>Ancien chantier naval, moderne, bord de mer</td></tr>
-        </tbody>
-      </table>
+      <h2>Les quartiers</h2>
+      <div class="quartiers">
+        <div class="quartier">
+          <div class="quartier-name">Old Town</div>
+          <div class="quartier-vibe">Médiéval UNESCO, ruelles pavées</div>
+        </div>
+        <div class="quartier">
+          <div class="quartier-name">Telliskivi</div>
+          <div class="quartier-vibe">Créatif, hipster, street art</div>
+        </div>
+        <div class="quartier">
+          <div class="quartier-name">Kalamaja</div>
+          <div class="quartier-vibe">Maisons en bois colorées</div>
+        </div>
+        <div class="quartier">
+          <div class="quartier-name">Noblessner</div>
+          <div class="quartier-vibe">Ancien chantier naval, bord de mer</div>
+        </div>
+      </div>
     </section>
 
     <hr>
 
-    <section class="links-section">
-      <h2>&#x1F517; Liens utiles</h2>
-
-      <h4>H&ocirc;tel</h4>
-      <p><a href="https://www.telegraafhotel.com/" target="_blank" rel="noopener">telegraafhotel.com</a></p>
-
-      <h4>Restaurants</h4>
-      <p>
-        <a href="https://rataskaevu16.ee/en/" target="_blank" rel="noopener">Rataskaevu 16</a> &mdash;
-        <a href="https://restoranmoon.ee/en/" target="_blank" rel="noopener">Moon</a> &mdash;
-        <a href="https://fhoone.ee/en/" target="_blank" rel="noopener">F-Hoone</a>
-      </p>
-
-      <h4>Saunas</h4>
-      <p>
-        <a href="https://www.kalmasaun.ee/eng-ajalooga-koht/" target="_blank" rel="noopener">Kalma Saun</a> &mdash;
-        <a href="https://iglupark.com/en/" target="_blank" rel="noopener">Iglupark</a>
-      </p>
-
-      <h4>Culture</h4>
-      <p>
-        <a href="https://kumu.ekm.ee/en/" target="_blank" rel="noopener">Kumu</a> &mdash;
-        <a href="https://meremuuseum.ee/lennusadam/en/" target="_blank" rel="noopener">Lennusadam</a>
-      </p>
-
-      <h4>R&eacute;servations</h4>
-      <p><a href="https://www.vabalaud.ee/en/" target="_blank" rel="noopener">vabalaud.ee</a></p>
+    <!-- Liens -->
+    <section>
+      <h2>Liens utiles</h2>
+      <div class="links">
+        <div class="link-group">
+          <h4>Hôtel</h4>
+          <a href="https://www.telegraafhotel.com/" target="_blank">Hotel Telegraaf</a>
+        </div>
+        <div class="link-group">
+          <h4>Restaurants</h4>
+          <a href="https://rataskaevu16.ee/en/" target="_blank">Rataskaevu 16</a>
+          <a href="https://restoranmoon.ee/en/" target="_blank">Moon</a>
+          <a href="https://fhoone.ee/en/" target="_blank">F-Hoone</a>
+        </div>
+        <div class="link-group">
+          <h4>Saunas</h4>
+          <a href="https://www.kalmasaun.ee/eng-ajalooga-koht/" target="_blank">Kalma Saun</a>
+          <a href="https://iglupark.com/en/" target="_blank">Iglupark</a>
+        </div>
+        <div class="link-group">
+          <h4>Culture</h4>
+          <a href="https://kumu.ekm.ee/en/" target="_blank">Kumu</a>
+          <a href="https://meremuuseum.ee/lennusadam/en/" target="_blank">Lennusadam</a>
+        </div>
+      </div>
     </section>
 
     <hr>
 
-    <footer class="dest-footer">
-      <p><em>J&rsquo;ai h&acirc;te de d&eacute;couvrir tout &ccedil;a avec toi &#x1F499;</em></p>
-    </footer>
+    <!-- Message -->
+    <div class="message">
+      J'ai hâte de découvrir tout ça avec toi<span class="heart">💙</span>
+    </div>
+
   </div>
   <script src="game.js"></script>
 </body>
