@@ -333,10 +333,6 @@
     var gate = GATES[gateIdx];
     if (!gate) return;
 
-    // File indicator
-    var indicator = document.querySelector('.file-indicator');
-    if (indicator) indicator.textContent = 'FILE ' + (gateIdx + 1) + '/7';
-
     // Riddle
     var riddle = document.querySelector('.riddle');
     var twKey = 'tw_' + hash;
